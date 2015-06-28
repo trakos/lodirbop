@@ -1,0 +1,58 @@
+assetic:
+  assets:
+    bazinga_translation:
+      inputs:
+        - '%kernel.root_dir%/../vendor/willdurand/js-translation-bundle/Bazinga/Bundle/JsTranslationBundle/Resources/js/translator.js'
+        - '@AppBundle/Resources/javascripts/TranslatorConfig.js'
+        - '%kernel.root_dir%/cache/js-translation/translations/config.js'
+        - '%kernel.root_dir%/cache/js-translation/translations/*/*.js'
+    bootstrap_js:
+      inputs:
+        - '%kernel.root_dir%/../vendor/bower/jquery/dist/jquery.min.js'
+        - '%kernel.root_dir%/../vendor/bower/bootstrap-sass/assets/javascripts/bootstrap.min.js'
+        - '%kernel.root_dir%/../vendor/bower/remarkable-bootstrap-notify/bootstrap-notify.min.js'
+    angular_lib_js:
+      inputs:
+        - '%kernel.root_dir%/../vendor/bower/angular/angular.min.js'
+        - '%kernel.root_dir%/../vendor/bower/angular-route/angular-route.min.js'
+        - '%kernel.root_dir%/../vendor/bower/angular-animate/angular-animate.min.js'
+        - '%kernel.root_dir%/../vendor/bower/angular-resource/angular-resource.min.js'
+    angular_bootsrap_errors_js:
+      inputs:
+        - '%kernel.root_dir%/../vendor/bower/angular-bootstrap-show-errors/src/showErrors.min.js'
+    angular_app_js:
+      inputs:
+        - '@AppBundle/Resources/javascripts/lib/*.js'
+        - '@AppBundle/Resources/javascripts/angular-app/initModules.js'
+        - '@AppBundle/Resources/javascripts/angular-app/*/*.js'
+    sass_style:
+      inputs:
+        - '@AppBundle/Resources/sass/style.scss'
+    bootstrap_glyphicons_ttf:
+      inputs:
+        - '%kernel.root_dir%/../vendor/bower/bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.ttf'
+      output: "fonts/bootstrap/glyphicons-halflings-regular.ttf"
+    bootstrap_glyphicons_eot:
+      inputs:
+        - '%kernel.root_dir%/../vendor/bower/bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.eot'
+      output: "fonts/bootstrap/glyphicons-halflings-regular.eot"
+    bootstrap_glyphicons_svg:
+      inputs:
+        - '%kernel.root_dir%/../vendor/bower/bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.svg'
+      output: "fonts/bootstrap/glyphicons-halflings-regular.svg"
+    bootstrap_glyphicons_woff:
+      inputs:
+        - '%kernel.root_dir%/../vendor/bower/bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.woff'
+      output: "fonts/bootstrap/glyphicons-halflings-regular.woff"
+    bootstrap_glyphicons_woff2:
+      inputs:
+        - '%kernel.root_dir%/../vendor/bower/bootstrap-sass/assets/fonts/bootstrap/glyphicons-halflings-regular.woff2'
+      output: "fonts/bootstrap/glyphicons-halflings-regular.woff2"
+    angular_pl:
+      inputs:
+        - '%kernel.root_dir%/../vendor/bower/angular-latest/src/ngLocale/angular-locale_pl.js'
+      output: "angularjs/pl.js"
+    angular_en:
+      inputs:
+        - '%kernel.root_dir%/../vendor/bower/angular-latest/src/ngLocale/angular-locale_en.js'
+      output: "angularjs/en.js"

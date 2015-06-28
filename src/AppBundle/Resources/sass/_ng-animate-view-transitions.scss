@@ -1,0 +1,39 @@
+
+// just a standard view transition, based on https://docs.angularjs.org/tutorial/step_12
+
+#page_wrap > .container {
+  position: relative;
+}
+
+.view-frame {
+
+  &.ng-enter, &.ng-leave {
+    position: absolute;
+    // add bootstrap .container paddings, because they don't apply to absolutely positioned elements
+    top: $header-height;
+    left: ($grid-gutter-width / 2);
+    right: ($grid-gutter-width / 2);
+    -webkit-transition: 1s linear all;
+    -moz-transition: 1s linear all;
+    -o-transition: 1s linear all;
+    transition: 1s linear all;
+  }
+
+  &.ng-enter {
+    z-index: 100;
+  }
+
+  &.ng-leave {
+    z-index: 99;
+  }
+
+  &.ng-enter,
+  &.ng-leave.ng-leave-active {
+    opacity: 0;
+  }
+
+  &.ng-enter.ng-enter-active,
+  &.ng-leave {
+    opacity: 1;
+  }
+}

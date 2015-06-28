@@ -1,0 +1,28 @@
+
+// classes that clears floats only in the given width range (predefined in boostrap - xs, sm, md or lg)
+
+// for use in columns (when which should clear depends on width), so uses basic clear instead of clearfix
+
+.clear-left-xs {
+  @media (max-width: $screen-xs-max) {
+    clear: left;
+  }
+}
+
+.clear-left-sm {
+  @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+    clear: left;
+  }
+}
+
+.clear-left-md {
+  @media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+    clear: left;
+  }
+}
+
+.clear-left-lg {
+  @media (min-width: $screen-lg-min) {
+    clear: left;
+  }
+}

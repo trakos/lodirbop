@@ -1,0 +1,53 @@
+<div class="panel panel-info">
+    <div class="panel-heading">All entries</div>
+    <div class="panel-body">
+        <div class="progress" ng-if="!entries.$resolved">
+            <div class="progress-bar progress-bar-striped active" role="progressbar" style="width: 100%">
+                <span class="sr-only">{{ 'Loading...'|trans }}</span>
+            </div>
+        </div>
+        <table class="table table-striped" ng-if="entries.$resolved">
+            <thead>
+                <tr>
+                    <th>Profile</th>
+                    <th>Timezone</th>
+                    <th>Game mode</th>
+                    <th>Mercs</th>
+                    <th>Other games</th>
+                    <th>Communities</th>
+                    <th>Age</th>
+                </tr>
+            </thead>
+            <tr ng-repeat-start="entry in entries">
+                <td style="width:250px;">
+                    <div class="steamProfile">
+                        <a class="friendBlockLinkOverlay" href="{{ '{{ entry.steamProfileData.profileUrl }}' }}"></a>
+
+                        <div class="playerAvatar">
+                            <img ng-src="{{ '{{ entry.steamProfileData.avatar }}' }}">
+                        </div>
+                        <div class="friendBlockContent">{{ '{{ entry.steamProfileData.personaName }}' }}</div>
+                    </div>
+                </td>
+                <td>{{ '{{ entry.timezone }}' }}</td>
+                <td>{{ '{{ entry.preferredGameMode }}' }}</td>
+                <td style="width: 20%">
+                    <img ng-repeat="merc in entry.mercs" style="width:24px;height:24px;" ng-src="{{ '{{ merc.imagePath }}' }}" alt="{{ '{{ merc.name }}' }}"/>
+                </td>
+                <td>
+                    <img ng-repeat="game in entry.games" style="width:24px;height:24px;" ng-src="{{ '{{ game.imagePath }}' }}" alt="{{ '{{ game.name }}' }}"/>
+                </td>
+                <td>
+                    <img ng-repeat="community in entry.communities" style="width:24px;height:24px;" ng-src="{{ '{{ community.imagePath }}' }}" alt="{{ '{{ community.name }}' }}"/>
+                </td>
+                <td>{{ '{{ entry.age }}' }}</td>
+            </tr>
+            <tr ng-repeat-end class="borderless">
+                <td colspan="100">
+                    {{ '{{ entry.description }}' }}
+                </td>
+            </tr>
+        </table>
+
+    </div>
+</div>

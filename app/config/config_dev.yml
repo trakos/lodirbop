@@ -1,0 +1,9 @@
+imports:
+- { resource: config.yml }
+
+assetic:
+  use_controller: true
+
+fos_rest:
+  exception:
+    enabled: true

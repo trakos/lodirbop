@@ -1,0 +1,67 @@
+imports:
+  - { resource: parameters.yml }
+  - { resource: services.yml }
+  - { resource: assets.yml }
+framework:
+  secret: "%secret%"
+  form: ~
+  csrf_protection: ~
+  session: ~
+  router:
+    resource: "%kernel.root_dir%/config/routing.yml"
+  templating:
+    engines: ['twig']
+  translator:
+    fallback: %default_locale%
+  default_locale: %default_locale%
+twig:
+  globals:
+    siteName: "Lonely Dirty Bomb Players"
+    csrfTokenName: "form"
+    available_locales: %available_locales%
+assetic:
+  ruby: %ruby_binary%
+  sass: %sass_binary%
+  filters:
+    compass:
+      bin: %compass_binary%
+      load_paths:
+        - '%kernel.root_dir%/../vendor/bower/bootstrap-sass/assets/stylesheets'
+services:
+  # to keep the names of the properties same as they are in classes, without underscores, lowercase, etc.
+  jms_serializer.cache_naming_strategy:
+    class: JMS\Serializer\Naming\IdenticalPropertyNamingStrategy
+fos_rest:
+  body_listener: true
+  view:
+    view_response_listener: 'force'
+  format_listener:
+    rules:
+      - { path: '^/api/', priorities: ['json'] }
+      # line below is needed for assetic to work properly on dev, otherwise it sends css as html
+      - { path: '^/css/', priorities: ['text/css'] }
+      - { path: '^/', priorities: [ 'text/html', '*/*'] }
+  exception:
+    enabled: true
+bazinga_js_translation:
+  active_locales: %available_locales%
+  locale_fallback: %default_locale%
+nelmio_api_doc: ~:
+jms_serializer:
+  visitors:
+    json:
+      options: []
+doctrine:
+  dbal:
+    driver:   "%database_driver%"
+    host:     "%database_host%"
+    dbname:   "%database_name%"
+    user:     "%database_user%"
+    password: "%database_password%"
+    charset: UTF8
+    mapping_types:
+      enum: string
+  orm:
+    auto_generate_proxy_classes: "%kernel.debug%"
+    naming_strategy: doctrine.orm.naming_strategy.underscore
+    auto_mapping: true

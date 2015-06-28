@@ -1,0 +1,28 @@
+
+// styling initial view (choosing between cheating or not)
+
+.container .jumbotron.game-option {
+  height: 400px;
+  margin-top: 150px;
+
+  &:hover {
+    background-color: #ddd;
+    cursor: pointer;
+  }
+
+  .btn {
+    position: absolute;
+    bottom: 150px;
+  }
+
+  @media (max-width: $screen-sm-min) {
+    margin-top: 10px;
+    height: auto;
+    min-height: 200px;
+
+    .btn {
+      position: inherit;
+      bottom: inherit;
+    }
+  }
+}

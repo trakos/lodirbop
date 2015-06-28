@@ -1,0 +1,12 @@
+.idea
+app/cache
+vendor
+*.iml
+app/config/parameters.yml
+web/coverage
+node_modules
+
+web/assetic
+web/fonts
+web/angularjs
+web/js

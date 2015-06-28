@@ -1,0 +1,2 @@
+Translator.placeHolderPrefix = '';
+Translator.placeHolderSuffix = '';

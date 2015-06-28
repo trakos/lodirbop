@@ -1,0 +1,8 @@
+app_bundle_annotations:
+  resource: "@AppBundle"
+  type: annotation
+_bazinga_jstranslation:
+  resource: "@BazingaJsTranslationBundle/Resources/config/routing/routing.yml"
+NelmioApiDocBundle:
+  resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+  prefix:   /apidoc

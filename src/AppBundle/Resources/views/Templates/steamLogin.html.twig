@@ -1,0 +1,12 @@
+<div class="jumbotron">
+    <h2>
+        {{ 'Steam Login'|trans }}
+    </h2>
+    <p>
+        Please login through Steam to add your entry:
+        <a href="{{ steamLoginUrl }}">
+            <img src="{{ asset('images/steam.png') }}" />
+        </a>
+    </p>
+    <p class="small">Steam authorization is done using OpenID protocol. From openid.net: <i>With OpenID, your password is only given to your identity provider, and that provider then confirms your identity to the websites you visit.  Other than your provider, no website ever sees your password, so you don’t need to worry about an unscrupulous or insecure website compromising your identity.</i></p>
+</div>

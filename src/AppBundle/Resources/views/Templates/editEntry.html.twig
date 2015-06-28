@@ -1,0 +1,150 @@
+<div class="panel panel-info">
+    <div class="panel-heading">Your entry</div>
+    <div class="panel-body">
+        <div class="progress" ng-if="!entry.$resolved">
+            <div class="progress-bar progress-bar-striped active" role="progressbar" style="width: 100%">
+                <span class="sr-only">{{ 'Loading...'|trans }}</span>
+            </div>
+        </div>
+
+        <form class="form-horizontal" role="form" ng-if="entry.$resolved" ng-submit="save()">
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Steam account</label>
+
+                <div class="col-sm-9">
+                    <div class="steamProfile" ng-if="steamProfileData && (!newEntry || steamProfileData.$resolved)">
+                        <a class="friendBlockLinkOverlay" href="{{ '{{ steamProfileData.profileUrl }}' }}"></a>
+
+                        <div class="playerAvatar">
+                            <img ng-src="{{ '{{ steamProfileData.avatar }}' }}">
+                        </div>
+                        <div class="friendBlockContent">{{ '{{ steamProfileData.personaName }}' }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group required">
+                <label class="col-sm-3 control-label"><abbr title="required">*</abbr> Timezone</label>
+
+                <div class="col-sm-9">
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="timezone" id="entryTimezone1" value="european" ng-model="entry.timezone" required="true">
+                            European
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="timezone" id="entryTimezone2" value="american" ng-model="entry.timezone" required="true">
+                            American
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group required">
+                <label class="col-sm-3 control-label"><abbr title="required">*</abbr> Preferred game mode</label>
+
+                <div class="col-sm-9">
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="preferredGameMode" id="entryPreferredGameMode1" value="public" ng-model="entry.preferredGameMode" required="true">
+                            playing on public servers
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="preferredGameMode" id="entryPreferredGameMode2" value="competitive" ng-model="entry.preferredGameMode" required="true">
+                            playing match-making (competitive)
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group required">
+                <label class="col-sm-3 control-label">Voice chat</label>
+
+                <div class="col-sm-9">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" id="isUsingVoiceChat" name="isUsingVoiceChat" ng-model="entry.isUsingVoiceChat"> I can use voice chat (either in-game or external, like teamspeak or mumble)
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Your favorite mercs</label>
+
+                <div class="col-sm-9">
+                    <div class="col-sm-6 col-md-4 col-lg-3" ng-repeat="merc in entry.mercs">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" id="entryMerc-{{ '{{ merc.id }}' }}" name="mercs[]" ng-model="merc.selected" style="margin-top: 10px;">
+                                <img ng-src="{{ '{{ merc.imagePath }}' }}" alt="{{ '{{ merc.name }}' }}" style="width:32px;height:32px;" />
+                                {{ '{{ merc.name }}' }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Other games you've played</label>
+
+                <div class="col-sm-9">
+                    <div class="col-sm-12 col-lg-6" ng-repeat="game in entry.games">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" id="entryGame-{{ '{{ game.id }}' }}" name="games[]" ng-model="game.selected" style="margin-top: 10px;">
+                                <img ng-src="{{ '{{ game.imagePath }}' }}" alt="{{ '{{ game.name }}' }}" />
+                                {{ '{{ game.name }}' }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Communities you're part of</label>
+
+                <div class="col-sm-9">
+                    <div class="col-sm-12 col-lg-6" ng-repeat="community in entry.communities">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" id="entryCommunity-{{ '{{ community.id }}' }}" name="communities[]" ng-model="community.selected" style="margin-top: 10px;">
+                                <img ng-src="{{ '{{ community.imagePath }}' }}" alt="{{ '{{ community.name }}' }}" />
+                                {{ '{{ community.name }}' }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="entryAge" class="col-sm-3 control-label">Your age</label>
+
+                <div class="col-sm-9">
+                    <input type="number" class="form-control" id="entryAge" name="age" ng-model="entry.age" placeholder="Your age (optional)">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="entryDescription" class="col-sm-3 control-label">Description</label>
+
+                <div class="col-sm-9">
+                    <textarea name="description" id="entryDescription" class="form-control" ng-model="entry.description" rows="3"></textarea>
+
+                    <p class="help-block">Some description, if you feel like writing one (optional). You could include details like when you're usually playing.</p>
+                </div>
+            </div>
+
+            <div class=text-right>
+                <button type="button" class="btn btn-danger" ng-if="!newEntry" ng-click="remove()">Remove your entry</button>
+                <button type="button" class="btn btn-warning" ng-click="cancel()">Cancel</button>
+                <button type="submit" class="btn btn-success">Save</button>
+            </div>
+        </form>
+    </div>
+</div>

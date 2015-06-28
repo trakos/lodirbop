@@ -1,0 +1,17 @@
+
+// smaller padding and bigger margin for bootstrap's jumbotron
+.container .jumbotron {
+  margin-top: 50px;
+  padding-top: 20px;
+}
+
+@media (max-width: $screen-sm-min) {
+  .container .jumbotron {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+.jumbotron p.small {
+  font-size: 85%;
+}

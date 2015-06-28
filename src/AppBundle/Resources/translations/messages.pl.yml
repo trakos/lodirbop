@@ -1,0 +1,45 @@
+# views
+'Choose your numbers': 'Wybierz swoje liczby'
+'There was an unexpected error while loading data. Please check your connection and try refreshing the page.': 'Wystąpił nieoczekiwany błąd podczas ładowania danych. Sprawdź swoje połączenie z internetem i spróbuj odświeżyć stronę.'
+'User basket': 'Kosz użytkownika'
+'Next number': 'Następny numer'
+'Next ball number': 'Następny numer kulki'
+Add: Dodaj
+full: zapełnienia
+'Chosen balls': 'Wybrane kulki'
+remove: Usuń
+'Show me results!': 'Pokaż wyniki!'
+Loading...: Ładowanie...
+Basket: Kosz
+'Let''s guess': Zgadujmy
+'Let''s cheat': Oszukujmy
+'Don''t show me balls in other baskets.': 'Nie pokazuj kulek w innych koszykach'
+'Choose guessing': 'Wybierz zgadywanie'
+'Show me balls in other baskets before I choose mine.': 'Pokaż kulki z innych koszyków zanim wybiorę swoje.'
+'Choose cheating': 'Wybierz oszukiwanie'
+'Baskets that have only balls owned by the user': 'Koszyki, które mają tylko kulki posiadane przez użytkownika'
+'Baskets that have exactly one ball owned by the user': 'Koszyki, które mają dokładnie jedną kulkę posiadaną przez użytkownika'
+'May include baskets above (if they fit both criteria)': 'Może zawierać koszyki powyżej (jeśli spełniają oba kryteria)'
+'Other baskets': 'Pozostałe koszyki'
+'Choose your destiny': 'Wybierz swoje przeznaczenie'
+'{1}%count% ball|]1,Inf]%count% balls': '{1}%count% kulka|]1,4]%count% kulki|]4,Inf]%count% kulek'
+
+# layout
+'Add randomly...': 'Dodaj losowo...'
+'Toggle navigation': 'Pokaż/schowaj nawigację'
+Home: 'Strona główna'
+'Change language': 'Zmień język'
+'Copythingy 2015 looking very seriously and all': 'Copythingy 2015 wyglądające bardzo poważnie i w ogóle'
+
+# javascript
+'Ball with this number is already in your basket.': 'Kulka z tym numerem już jest w Twoim koszyku.'
+'Your basket is already full.': 'Twój koszyk jest już pełen.'
+'Your basket can''t be empty!': 'Twój koszyk nie może być pusty!'
+'Choose your numbers first!': 'Najpierw wybierz swoje numery!'
+'Ball number too small': 'Podany numer kulki jest za mały!'
+'Ball number too big': 'Podany numer kulki jest za duży!'
+
+# php
+'No required parameters were sent': 'Nie wysłano wymaganych parametrów'
+'Input validation failed: {{ errors }}': 'Parametry niepoprawne: {{ errors }}'
+'You cannot add two balls with the same number.': 'Nie możesz dodać dwóch kulek z tym samym numerem.'

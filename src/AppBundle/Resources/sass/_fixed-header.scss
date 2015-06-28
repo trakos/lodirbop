@@ -1,0 +1,13 @@
+
+// header that stays on top when scrolling
+
+$header-height: 60px;
+
+#page_wrap {
+  > nav.navbar {
+    @extend .navbar-fixed-top
+  }
+  > .container {
+    padding-top: $header-height;
+  }
+}

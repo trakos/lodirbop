@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html ng-app="trkApp" lang="{{ app.request.locale }}">
+<head>
+    {% block head %}
+        <title>
+            {%  block title %}
+                {{ siteName }}
+            {% endblock %}
+        </title>
+        {% block assets %}
+            {% javascripts '@bazinga_translation' '@bootstrap_js' '@angular_lib_js' '@angular_bootsrap_errors_js' '@angular_app_js' %}
+                <script src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+            {% stylesheets "@sass_style" filter='compass' %}
+            <link rel="stylesheet" href="{{ asset_url }}"/>
+            {% endstylesheets %}
+            <script src="{{ url('bazinga_jstranslation_js') }}"></script>
+            {# ten plik musi byc zarejestrowany w assets.yml dla kazdego obslugiwanego jezyka #}
+            {# albo po prostu faktycznie byc pod ta lokalizacja #}
+            <script src="angularjs/{{ app.request.getLocale() }}.js"></script>
+        {% endblock %}
+        {{
+            generateJavascriptConstants({
+                GLOBAL_CSRF_TOKEN: csrf_token(csrfTokenName),
+                STEAM_AUTH: app.session.get('steam', []),
+                DATABASE_DICTIONARIES: getDatabaseDictionaries()
+            }) | raw
+        }}
+    {% endblock %}
+</head>
+<body>
+    <div id="page_wrap">
+
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">{{ 'Toggle navigation'|trans }}</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="{{ path('homepage') }}#/">{{ siteName }}</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="{{ path('homepage') }}#/">{{ 'Home'|trans }}</a></li>
+                        <li><a href="{{ path('homepage') }}#/player-list">{{ 'Show player list'|trans }}</a></li>
+                        <li><a href="{{ path('homepage') }}#/steam-login">{{ 'Add/edit entry'|trans }}</a></li>
+                    </ul>
+                    {#<ul class="nav navbar-nav navbar-right">#}
+                        {#<li class="dropdown">#}
+                            {#<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ 'Change language'|trans }} <span class="caret"></span></a>#}
+                            {#<ul class="dropdown-menu" role="menu">#}
+                                {#{% for locale in available_locales %}#}
+                                    {#<li><a href="{{ path('homepage', {'_locale': locale}) }}#/">{{ locale }}</a></li>#}
+                                {#{% endfor %}#}
+                            {#</ul>#}
+                        {#</li>#}
+                    {#</ul>#}
+                </div>
+            </div>
+        </nav>
+
+        <div class="container">
+            {% block content %}
+            {% endblock %}
+        </div>
+
+        <div id="page_content_push">
+
+        </div>
+
+    </div>
+
+    <footer id="page_footer">
+        <div class="container">
+            {% block footer %}
+                <p class="text-muted"><a href="http://steampowered.com/">Powered by Steam</a></p>
+            {% endblock %}
+        </div>
+    </footer>
+</body>
+</html>

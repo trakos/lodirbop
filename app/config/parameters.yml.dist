@@ -1,0 +1,15 @@
+parameters:
+  secret: 68dbefcaced14179acf0c180ccbec43b
+  steamApiKey: ~
+  ruby_binary: '/usr/bin/ruby'
+  sass_binary: '/usr/bin/sass'
+  # assetic doesn't work with versions above 1.0, use 0.12.7
+  compass_binary: '/usr/bin/compass'
+  default_locale: en
+  available_locales:
+    - en
+  database_driver:    pdo_mysql
+  database_host:      localhost
+  database_name:      dirbos
+  database_user:      root
+  database_password:  password

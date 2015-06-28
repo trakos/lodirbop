@@ -1,0 +1,31 @@
+
+services:
+  trakos.rest_form_handler:
+    class: Trakos\AppBundle\Service\RestFormHandler
+    arguments: [ @form.factory, @translator ]
+  trakos.twig_extension:
+    class: Trakos\AppBundle\Service\TwigExtension
+    arguments: [ @doctrine ]
+    public: false
+    tags:
+      - { name: twig.extension }
+  trakos.steam_login:
+    class: Trakos\AppBundle\Service\SteamLogin
+    arguments: [ @router ]
+    tags:
+      - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+  trakos.csrf_converter:
+    class: Trakos\AppBundle\Request\ParamConverter\CsrfParamConverter
+    arguments: [ @security.csrf.token_manager, @translator ]
+    tags:
+      - { name: request.param_converter, priority: -1, converter: csrf_converter }
+  trakos.steam_api:
+    class: Trakos\AppBundle\Service\SteamApi
+    arguments: [ %steamapikey%, @trakos.cache ]
+  trakos.cache:
+    class: Doctrine\Common\Cache\ApcCache
+  trakos.steam_profile_data_injector:
+    class: Trakos\AppBundle\Service\SteamProfileDataInjector
+    arguments: [ @trakos.steam_api ]
+    tags:
+      - { name: doctrine.event_listener, event: postLoad }
