@@ -22,6 +22,8 @@ class SteamLogin
 
     protected $locale = 'xx';
 
+    protected $testing = false;
+
     public function __construct(RouterInterface $router)
     {
         $this->router = $router;
@@ -41,11 +43,13 @@ class SteamLogin
 
     public function getAuthUrl()
     {
-        return $this->router->generate(
-            'steamOpenId',
-            ['_locale' => $this->locale]
-        );
-        //$this->openIdConsumer->authUrl();
+        if ($this->testing) {
+            return $this->router->generate(
+                'steamOpenId',
+                ['_locale' => $this->locale]
+            );
+        }
+        return $this->openIdConsumer->authUrl();
     }
 
     /**
@@ -54,10 +58,12 @@ class SteamLogin
     public function auth()
     {
         $result = new SteamAuthResult();
-        $result->success = true;
-        $result->steamId = '76561197968941097';
-        //$result->errorMessage = 'testowa wiadomość';
-        return $result;
+        if ($this->testing) {
+            $result->success = true;
+            $result->steamId = '76561197968941097';
+            //$result->errorMessage = 'testowa wiadomość';
+            return $result;
+        }
         $this->openIdConsumer->setData($_GET);
         if (!$this->openIdConsumer->isResponseState()) {
             $result->errorMessage = "Response is not a correct OpenId response";

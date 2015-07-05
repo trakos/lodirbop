@@ -5,6 +5,7 @@ namespace Trakos\AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Type;
 use Trakos\AppBundle\Component\Form\AbstractStagedType;
@@ -50,7 +51,7 @@ class EntryType extends AbstractStagedType
         $builder
             ->add('id', 'text', [ 'required' => true ])
             ->add('age', 'integer')
-            ->add('description', 'text')
+            ->add('description', 'text', ['constraints' => [ new Length(['max' => 500])]])
             ->add(
                 'timezone',
                 'choice',
@@ -68,21 +69,15 @@ class EntryType extends AbstractStagedType
                 $this->getFormHandlingStage() == FormHandlingStage::Validation() ? $this->getIntegerCollectionValidationOptions() : [ ]
             )
             ->add(
-                'mercs'
+                'mercs',
+                $this->getFormHandlingStage() == FormHandlingStage::Validation() ? 'collection' : null,
+                $this->getFormHandlingStage() == FormHandlingStage::Validation() ? $this->getIntegerCollectionValidationOptions() : [ ]
             )
-            ->add('communities');
-        /*
-         *
-            ->add('id', 'text')
-            ->add('age', 'integer')
-            ->add('description', 'text')
-            ->add('timezone', 'choice')
-            ->add('preferredGameMode', 'choice')
-            ->add('isUsingVoiceChat', 'checkbox')
-            ->add('games', 'entity')
-            ->add('mercs', 'entity')
-            ->add('communities', 'entity')
-         */
+            ->add(
+                'communities',
+                $this->getFormHandlingStage() == FormHandlingStage::Validation() ? 'collection' : null,
+                $this->getFormHandlingStage() == FormHandlingStage::Validation() ? $this->getIntegerCollectionValidationOptions() : [ ]
+            );
     }
 
     /**

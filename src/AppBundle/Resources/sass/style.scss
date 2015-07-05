@@ -1,6 +1,10 @@
 
 @import "bootstrap";
 
+.container > .view-frame > .panel {
+  margin-top: 100px;
+}
+
 @import "responsive-clear-left";
 @import "fixed-header";
 @import "sticky-footer";

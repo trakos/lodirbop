@@ -1,4 +1,4 @@
-<div class="panel panel-info">
+<div class="panel panel-info" style="min-width: 680px;">
     <div class="panel-heading">All entries</div>
     <div class="panel-body">
         <div class="progress" ng-if="!entries.$resolved">
@@ -10,6 +10,7 @@
             <thead>
                 <tr>
                     <th>Profile</th>
+                    <th>Voicechat?</th>
                     <th>Timezone</th>
                     <th>Game mode</th>
                     <th>Mercs</th>
@@ -21,7 +22,7 @@
             <tr ng-repeat-start="entry in entries">
                 <td style="width:250px;">
                     <div class="steamProfile">
-                        <a class="friendBlockLinkOverlay" href="{{ '{{ entry.steamProfileData.profileUrl }}' }}"></a>
+                        <a class="linkOverlay" target="_blank" href="{{ '{{ entry.steamProfileData.profileUrl }}' }}"></a>
 
                         <div class="playerAvatar">
                             <img ng-src="{{ '{{ entry.steamProfileData.avatar }}' }}">
@@ -29,6 +30,7 @@
                         <div class="friendBlockContent">{{ '{{ entry.steamProfileData.personaName }}' }}</div>
                     </div>
                 </td>
+                <td ng-class="{success: entry.isUsingVoiceChat}">{{ '{{ entry.isUsingVoiceChat ? "YES" : "NO" }}' }}</td>
                 <td>{{ '{{ entry.timezone }}' }}</td>
                 <td>{{ '{{ entry.preferredGameMode }}' }}</td>
                 <td style="width: 20%">

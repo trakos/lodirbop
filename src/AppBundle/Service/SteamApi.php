@@ -32,11 +32,14 @@ class SteamApi
         $cacheKey = 'steam-profile-' . $steamId;
         if (!$this->cache->contains($cacheKey)) {
             $user = new User($this->steamApiKey, $steamId);
+
+            $errorHandler = set_error_handler(function() { return true; });
             try {
                 $player = $user->GetPlayerSummaries();
             } catch (\Exception $e) {
                 $player = null;
             }
+            set_error_handler($errorHandler);
             if (!$player) {
                 // I'd rather have null than empty array
                 $player = null;

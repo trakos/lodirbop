@@ -46,6 +46,10 @@ angular.module('trkControllers').controller('EditEntryCtrl', [
             }).error(errorHandlerPromise);
         };
         $scope.save = function() {
+            if (!$scope.entryForm.$valid) {
+                NotificationCenter.error("Form data invalid, please fix it.");
+                return;
+            }
             $scope.entry.$resolved = false;
             $scope.entry.$save(function() {
                 NotificationCenter.success("Your entry has been saved.");
