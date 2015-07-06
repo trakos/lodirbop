@@ -8,8 +8,7 @@ if (!empty($_SERVER["REQUEST_URI"]) && !is_dir($path) && file_exists($path) && $
 require_once __DIR__ . "/../app/autoload.php";
 
 $request = Symfony\Component\HttpFoundation\Request::createFromGlobals();
-$kernel = new AppKernel('prod', false);
-$kernel->loadClassCache();
+$kernel = new AppKernel('dev', true);
 $response = $kernel->handle($request);
 $response->send();
 $kernel->terminate($request, $response);
