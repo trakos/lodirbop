@@ -46,7 +46,7 @@ class EntryController extends FOSRestController
     {
         $preparedFilters = [];
         foreach ($filters as $name => $value) {
-            if ($value && is_string($value) && in_array($name, $this->allowedFilters)) {
+            if ($value && !is_array($value) && !is_object($value) && in_array($name, $this->allowedFilters)) {
                 $preparedFilters[$name] = $value;
             }
         }
