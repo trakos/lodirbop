@@ -2,7 +2,9 @@
 
 namespace Trakos\AppBundle\Controller\Api;
 
+use Doctrine\ORM\EntityRepository;
 use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\Request\ParamFetcherInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Trakos\AppBundle\Entity\Entry;
@@ -11,9 +13,23 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Trakos\AppBundle\Component\Validator\Constraints\IsJson;
 
 class EntryController extends FOSRestController
 {
+
+    /**
+     * @return \Doctrine\ORM\EntityRepository
+     * @throws \Exception
+     */
+    protected function getRepository()
+    {
+        $repository = $this->getDoctrine()->getRepository('AppBundle:Entry');
+        if ((!$repository instanceof EntityRepository)) {
+            throw new \Exception("Repository is not of type EntityRepository!");
+        }
+        return $repository;
+    }
 
     protected function ensureEntryForLoggedInId(Entry $entry)
     {
@@ -24,10 +40,26 @@ class EntryController extends FOSRestController
         }
     }
 
+    protected $allowedFilters = ['isUsingVoiceChat', 'preferredGameMode', 'timezone'];
+
+    protected function prepareFilters($filters)
+    {
+        $preparedFilters = [];
+        foreach ($filters as $name => $value) {
+            if ($value && is_string($value) && in_array($name, $this->allowedFilters)) {
+                $preparedFilters[$name] = $value;
+            }
+        }
+        return $preparedFilters;
+    }
+
     /**
      * Returns entry for given steam id
      * @Rest\Get(path="/api/entry/{csrfToken}/all")
      * @Rest\View
+     * @Rest\QueryParam(name="offset", requirements="\d+", nullable=true, description="Offset from which to start listing pages.")
+     * @Rest\QueryParam(name="limit", requirements="\d+", default="50", description="How many pages to return.")
+     * @Rest\QueryParam(name="filters", requirements=@IsJson, description="Json with filters")
      * @ApiDoc(
      *  resource = true,
      *  output = "\Trakos\AppBundle\Entity\Entry[]",
@@ -36,17 +68,31 @@ class EntryController extends FOSRestController
      *      400 = "Returned when validation fails"
      *  },
      *  parameters = {
-     *      {"name"="csrfToken", "dataType"="string", "required"=true, "description"="csrf token value"}
+     *      {"name"="csrfToken", "dataType"="string", "required"=true, "description"="csrf token value"},
+     *      {"name"="offset", "dataType"="int"},
+     *      {"name"="limit", "dataType"="int"}
      *  }
      * )
      *
-     * @param CsrfToken $csrfToken
+     * @param CsrfToken             $csrfToken
+     * @param ParamFetcherInterface $paramFetcher
      *
      * @return JsonResponse
+     * @throws \Exception
      */
-    public function queryEntriesAction(CsrfToken $csrfToken)
+    public function queryEntriesAction(CsrfToken $csrfToken, ParamFetcherInterface $paramFetcher)
     {
-        return array_values($this->getDoctrine()->getRepository('AppBundle:Entry')->findAll());
+        $offset = $paramFetcher->get('offset');
+        $offset = max($offset, 0);
+        $limit = $paramFetcher->get('limit');
+        $limit = min(100, max(5, $limit));
+        $filters = $paramFetcher->get('filters');
+        $filters = $filters ? $this->prepareFilters(json_decode($filters, true)) : [];
+        $count = $this->getRepository()->createQueryBuilder('e')->select('count(e)')->getQuery()->getSingleScalarResult();
+        $data = $this->getRepository()->findBy($this->prepareFilters($filters), [], $limit, $offset);
+        return $this
+            ->view($data)
+            ->setHeader('X-COUNT', $count);
     }
 
     /**
@@ -105,6 +151,8 @@ class EntryController extends FOSRestController
         $request = $this->container->get('request_stack')->getCurrentRequest();
         $entry = new Entry();
         $this->get('trakos.rest_form_handler')->handleRestInput($request, new EntryType(), $entry, "post");
+        $entry->addedAt = new \DateTime();
+        $entry->addedFromIp = $request->getClientIp();
         $this->getDoctrine()->getManager()->persist($entry);
         $this->getDoctrine()->getManager()->flush();
     }
@@ -140,6 +188,8 @@ class EntryController extends FOSRestController
         $request = $this->container->get('request_stack')->getCurrentRequest();
         $this->get('trakos.rest_form_handler')->handleRestInput($request, new EntryType(), $entry, "post");
         $this->ensureEntryForLoggedInId($entry);
+        $entry->editedAt = new \DateTime();
+        $entry->editedFromIp = $request->getClientIp();
         $this->getDoctrine()->getManager()->persist($entry);
         $this->getDoctrine()->getManager()->flush();
     }

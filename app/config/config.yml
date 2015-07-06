@@ -32,6 +32,7 @@ services:
   jms_serializer.cache_naming_strategy:
     class: JMS\Serializer\Naming\IdenticalPropertyNamingStrategy
 fos_rest:
+  param_fetcher_listener: true
   body_listener: true
   view:
     view_response_listener: 'force'

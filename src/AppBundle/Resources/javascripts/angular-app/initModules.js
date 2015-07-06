@@ -1,11 +1,12 @@
 'use strict';
 
-angular.module('trkControllers', []);
+angular.module('trkControllers', ['ui.bootstrap']);
 angular.module('trkDirectives', []);
 angular.module('trkFilters', []);
 angular.module('trkServices', ['ngResource']);
 angular.module('trkApp', [
     'ui.bootstrap.showErrors',
+    'ui.bootstrap',
     'ngRoute',
     'ngAnimate',
     'trkControllers',

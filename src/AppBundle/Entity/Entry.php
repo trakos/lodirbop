@@ -59,6 +59,35 @@ class Entry
     public $isUsingVoiceChat;
 
     /**
+     * @ORM\Column(type="datetime")
+     * @JMS\Exclude
+     * @var \DateTime
+     */
+    public $addedAt;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @JMS\Exclude
+     * @var \DateTime
+     */
+    public $editedAt;
+
+
+    /**
+     * @ORM\Column(type="text", length=39)
+     * @JMS\Exclude
+     * @var string
+     */
+    public $addedFromIp;
+
+    /**
+     * @ORM\Column(type="text", nullable=true, length=39)
+     * @JMS\Exclude
+     * @var string
+     */
+    public $editedFromIp;
+
+    /**
      * @ORM\ManyToMany(targetEntity="Game")
      * @ORM\JoinTable(name="entry_games",
      *      joinColumns={@ORM\JoinColumn(name="entry_id", referencedColumnName="id")},

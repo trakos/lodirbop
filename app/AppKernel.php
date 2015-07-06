@@ -1,5 +1,6 @@
 <?php
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
 
@@ -31,5 +32,8 @@ class AppKernel extends Kernel
     public function __construct($environment, $debug)
     {
         parent::__construct($environment, $debug);
+
+        Request::setTrustedProxies(['10.0.0.0/8']);
+        Request::setTrustedHeaderName(Request::HEADER_CLIENT_IP, 'X-Proxy-Original-Ip');
     }
 }
