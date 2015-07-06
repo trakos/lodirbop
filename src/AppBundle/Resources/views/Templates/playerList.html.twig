@@ -26,21 +26,21 @@
                 <input type="checkbox" ng-model="filters.isUsingVoiceChat" ng-change="changePage()">
             </td>
             <td>
-                <select ng-model="filters.timezone" ng-change="changePage()">
+                <select ng-model="filters.timezone" ng-change="filterChange()">
                     <option value="" selected>no filter</option>
                     <option value="european">european</option>
                     <option value="american">american</option>
                 </select>
             </td>
             <td>
-                <select ng-model="filters.preferredGameMode" ng-change="changePage()">
+                <select ng-model="filters.preferredGameMode" ng-change="filterChange()">
                     <option value="" selected>no filter</option>
                     <option value="public">public</option>
                     <option value="competitive">competitive</option>
                 </select>
             </td>
             <td>
-                {# <select ng-model="filters.mercs" ng-change="changePage()">
+                {# <select ng-model="filters.mercs" ng-change="filterChange()">
                     <option value="" selected>no filter</option>
                     <option ng-repeat="merc in dictionaries.mercs" value="{{ '{{ merc.id }}' }}">{{ '{{ merc.name }}' }}</option>
                 </select> #}

@@ -10,6 +10,10 @@ angular.module('trkControllers').controller('PlayerListCtrl', [
         $scope.filters = {};
         $scope.dictionaries = DATABASE_DICTIONARIES;
 
+        $scope.filterChange = function() {
+            $scope.currentPage = 1;
+            $scope.changePage();
+        };
         $scope.changePage = function () {
             $scope.entries = EntryResource.query(
                 {
